@@ -1,4 +1,5 @@
 <?php
+    include('conexao.php');
     $filename = "dicionario.txt";
     $content = file_get_contents($filename);
 
@@ -9,11 +10,13 @@
 
 
     $resultado = preg_match_all($pattern, $content, $match);
-    
-    
-    for($i = 0; $i<500; $i++){
-        echo $match[1][$i];
-        echo "<br>";
-    }
+
+
+    //$size = count($match[1]);
+
+    //for($i = 0; $i<$size; $i++){
+    //    echo ($i+1)." - ".$match[1][$i] ;
+    //    echo "<br>";
+    //}
 
 ?>
