@@ -162,5 +162,7 @@
         $sql = "INSERT INTO palavra (caracteres, canonicidade, tipo) VALUES ('$novaPalavra', $canonicidade,$tipo)";
         $conexao->query($sql);
     }
+
+    mysqli_close($conexao);
 ?>
 

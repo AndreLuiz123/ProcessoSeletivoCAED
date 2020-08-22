@@ -1,3 +1,5 @@
+<?php include("ConexaoBD/conexao.php");?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,11 +28,20 @@
     <div>
         <h2>Palavras</h2>
         <ul>
+        <?php
+            $sql = "SELECT * FROM palavra WHERE canonicidade LIKE 1 AND tipo LIKE 3";
+            $dados = $conexao->query($sql);
 
+            while($registro = mysqli_fetch_array($dados))
+            {
+                $palavra = $registro['caracteres'];
+                echo "<li>".$palavra."</li>";
+            }
+        ?>
         </ul>
     </div>
 
-    <script>
+    <!--<script>
         var form = document.forms.instrucao;
         var lista = document.getElementsByTagName("ul")[0];
     
@@ -44,10 +55,7 @@
             lista.appendChild(novoLi);
         }
 
-
-
+    </script>-->
     
-    </script>
-
 </body>
 </html>
