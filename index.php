@@ -2,12 +2,25 @@
     include("conexao.php");
 
     function preparaPalavraTestes($string){
-        $vowels = array("<b>·</b>");
+        $vowels = array("<b>·</b>","·");
         $palavra = str_replace($vowels, ".", $string);
         $vowels = array("<b>","</b>");
         $palavra = str_replace($vowels, ",", $palavra);
-        $vowels = array("<u>","</u>");
+        $vowels = array("<u>","</u>","<span>","</span>");
         $palavra = str_replace($vowels, "", $palavra);
+        $vowels = array("á","â","ã","à");
+        $palavra = str_replace($vowels, "a", $palavra);
+        $vowels = array("é","ê");
+        $palavra = str_replace($vowels, "e", $palavra);
+        $vowels = array("ó","ô","õ");
+        $palavra = str_replace($vowels, "o", $palavra);
+        $vowels = array("í");
+        $palavra = str_replace($vowels, "i", $palavra);
+        $vowels = array("ú");
+        $palavra = str_replace($vowels, "u", $palavra);
+        $vowels = array("ç");
+        $palavra = str_replace($vowels, "c", $palavra);
+        
         return $palavra;
     }
 
@@ -62,7 +75,7 @@
                 $palavraAnalisada = substr($palavraAnalisada, 1);
             }
 
-            return 3;
+            return 1;
     }
 
     function verificaVogal($caractere){
@@ -134,7 +147,7 @@
 
     
     
-    for($i = 0; $i<$size; $i++){
+    for($i = 0; $i<50; $i++){
         $novaPalavra = $match[1][$i];
         echo $novaPalavra."<br>";
         $novaPalavra = preparaPalavraTestes($novaPalavra);
