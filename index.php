@@ -147,7 +147,7 @@
 
     
     
-    for($i = 0; $i<50; $i++){
+    for($i = 0; $i<$size; $i++){
         $novaPalavra = $match[1][$i];
         echo $novaPalavra."<br>";
         $novaPalavra = preparaPalavraTestes($novaPalavra);
@@ -164,65 +164,3 @@
     }
 ?>
 
-<?php
-    class Palavra
-    {
-        public $codigo;
-        public $caracteres;
-        public $canonicidade;
-        public $tipo;
-
-        function Palavra($string){
-
-        }
-        
-        function preparaPalavra($string){
-            $vowels = array("<b>","</b>","<u>","</u>");
-            $palavra = str_replace($vowels, "", $string);
-            return $palavra;
-        }
-
-        function verificaCanonicidade($string){
-
-            $palavraAnalisada = $string.".";
-            while(strlen($palavraAnalisada)>0)
-            {
-                $silaba = strstr($palavraAnalisada, '.',true); 
-                if(!$silaba)
-                $silaba = strstr($palavraAnalisada, '',true);
-                if(strlen($silaba)>2)
-                {
-                    return false;
-                }else if(!(!verificaVogal($silaba[0]) && verificaVogal($silaba[1])))
-                {
-                    return false;
-                }
-                $palavraAnalisada = strstr($palavraAnalisada,'.');
-                $palavraAnalisada = substr($palavraAnalisada, 1);
-            }
-            return true;
-        }
-
-        function verificaTipo($string){
-                    
-            $silabaTonica = 1;
-            $palavraAnalisada = strrev($string);
-
-            while($silabaTonica<4)
-            {
-                $silaba = strstr($palavraAnalisada, '.', true); 
-                
-                if($silaba[0]===',')
-                {
-                    return $silabaTonica;
-                }
-                $silabaTonica++;
-                $palavraAnalisada = strstr($palavraAnalisada,'.');
-                $palavraAnalisada = substr($palavraAnalisada, 1);
-            }
-
-            return 3;
-        }
-
-    }
-?>
