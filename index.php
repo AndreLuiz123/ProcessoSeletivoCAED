@@ -13,12 +13,10 @@
         {
             echo $palavraAnalisada."<br>";
             $silaba = strstr($palavraAnalisada, '.',true); 
-            if(!$silaba)
-            $silaba = strstr($palavraAnalisada, '',true);
             echo $silaba."<br>";
-            if(strlen($silaba)>2)
+            if(strlen($silaba)!=2)
             {
-                echo "Não é canônica pois tem mais de duas letras na sílaba";
+                echo "Não é canônica pois a sílaba é composta de um número de caracteres diferente de 2";
                 return false;
             }else if(!(!verificaVogal($silaba[0]) && verificaVogal($silaba[1])))
             {
@@ -35,7 +33,33 @@
 
     function verificaTipo($string){
         
+            $silabaTonica = 1;
+            $palavraAnalisada = strrev($string);
+            echo $palavraAnalisada."<br>";
 
+
+            while($silabaTonica<4)
+            {
+                $silaba = strstr($palavraAnalisada, '.', true); 
+                
+                echo $silaba."<br>";  
+                if($silaba[0]===',')
+                {
+                    if($silabaTonica===1)
+                    echo "Oxítona <br>";
+                    if($silabaTonica===2)
+                    echo "Paroxítona <br>";
+                    if($silabaTonica===3)
+                    echo "Proparoxítona <br>"; 
+                    return $silabaTonica;
+                }
+                $silabaTonica++;
+                echo "prox passo <br><br>";
+                $palavraAnalisada = strstr($palavraAnalisada,'.');
+                $palavraAnalisada = substr($palavraAnalisada, 1);
+            }
+
+            return 3;
     }
 
     function verificaVogal($caractere){
@@ -112,7 +136,7 @@
     //for($i = 0; $i<$size; $i++){
         //echo ($i+1)." - ".$match[1][20]."<br>";
         //preparaPalavra($match[1][20]);
-        verificaCanonicidade("ba.bar");
+        verificaTipo("ca.ca.ca.ca.sa.,rao,");
         //echo verificaVogal('p');
         //echo "<br>";
 
@@ -159,7 +183,24 @@
         }
 
         function verificaTipo($string){
+                    
+            $silabaTonica = 1;
+            $palavraAnalisada = strrev($string);
 
+            while($silabaTonica<4)
+            {
+                $silaba = strstr($palavraAnalisada, '.', true); 
+                
+                if($silaba[0]===',')
+                {
+                    return $silabaTonica;
+                }
+                $silabaTonica++;
+                $palavraAnalisada = strstr($palavraAnalisada,'.');
+                $palavraAnalisada = substr($palavraAnalisada, 1);
+            }
+
+            return 3;
         }
 
     }
