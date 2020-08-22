@@ -1,166 +1,53 @@
-<?php
-    include("conexao.php");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de palavras</title>
+</head>
+<body>
+    <h1>GERADOR DE PALAVRAS</h1>
 
-    function preparaPalavraTestes($string){
-        $vowels = array("<b>·</b>","·");
-        $palavra = str_replace($vowels, ".", $string);
-        $vowels = array("<b>","</b>");
-        $palavra = str_replace($vowels, ",", $palavra);
-        $vowels = array("<u>","</u>","<span>","</span>");
-        $palavra = str_replace($vowels, "", $palavra);
-        $vowels = array("á","â","ã","à");
-        $palavra = str_replace($vowels, "a", $palavra);
-        $vowels = array("é","ê");
-        $palavra = str_replace($vowels, "e", $palavra);
-        $vowels = array("ó","ô","õ");
-        $palavra = str_replace($vowels, "o", $palavra);
-        $vowels = array("í");
-        $palavra = str_replace($vowels, "i", $palavra);
-        $vowels = array("ú");
-        $palavra = str_replace($vowels, "u", $palavra);
-        $vowels = array("ç");
-        $palavra = str_replace($vowels, "c", $palavra);
+
+    <form name="instrucao"  method="GET">
+            Tipo da palavra:<br>
+            <input type="radio" name="tipo" value="O"> Oxítona<br>
+            <input type="radio" name="tipo" value="P"> Paroxítona<br>
+            <input type="radio" name="tipo" value="PP"> Proparoxítona<br>
+
+            Canonicidade:<br>
+            <input type="radio" name="canonicidade" value="S"> Canônica<br>
+            <input type="radio" name="canonicidade" value="N"> Não canônica<br>
+            
         
-        return $palavra;
-    }
+            <input type="submit" value="Procurar palavras"></input>
+    </form> 
 
-    function preparaPalavraTestes2($string){
-        $vowels = array(",");
-        $palavra = str_replace($vowels, "", $string);
-        return $palavra;
-    }
+    <div>
+        <h2>Palavras</h2>
+        <ul>
 
-    function preparaPalavraBD($string){
-        $vowels = array(",",".");
-        $palavra = str_replace($vowels, "", $string);
-        return $palavra;
-    }
+        </ul>
+    </div>
 
-    function verificaCanonicidade($string){
-        $palavraAnalisada = $string.".";
-        while(strlen($palavraAnalisada)>0)
-        {
-           
-            $silaba = strstr($palavraAnalisada, '.',true); 
+    <script>
+        var form = document.forms.instrucao;
+        var lista = document.getElementsByTagName("ul")[0];
+    
+        form.addEventListener("submit", insereElementoNovoLista);
 
-            if(strlen($silaba)!=2)
-            {
-                return 0;
-            }else if(!(!verificaVogal($silaba[0]) && verificaVogal($silaba[1])))
-            {
-                return 0;
-            }
-            $palavraAnalisada = strstr($palavraAnalisada,'.');
-            $palavraAnalisada = substr($palavraAnalisada, 1);
+        function insereElementoNovoLista(e){
+            e.preventDefault();
+            console.log("teste");
+            let novoLi = document.createElement("li");
+            novoLi.textContent = "teste";
+            lista.appendChild(novoLi);
         }
-        return 1;
-    }
 
-    function verificaTipo($string){
-        
-            $silabaTonica = 1;
-            $palavraAnalisada = strrev($string);
-
-
-            while($silabaTonica<4)
-            {
-                $silaba = strstr($palavraAnalisada, '.', true); 
-                
-                if($silaba[0]===',')
-                {
-                    return $silabaTonica;
-                }
-                $silabaTonica++;
-                $palavraAnalisada = strstr($palavraAnalisada,'.');
-                $palavraAnalisada = substr($palavraAnalisada, 1);
-            }
-
-            return 1;
-    }
-
-    function verificaVogal($caractere){
-
-
-        switch ($caractere){
-            case 'a':
-              
-                return true;
-            break;
-            case 'e':
-              
-                return true;
-            break;
-            case 'i':
-              
-                return true;
-            break;
-            case 'o':
-              
-                return true;
-            break;
-            case 'u':
-              
-                return true;
-            break;
-            case 'A':
-              
-                return true;
-            break;
-            case 'E':
-              
-                return true;
-            break;
-            case 'I':
-              
-                return true;
-            break;
-            case 'O':
-              
-                return true;
-            break;
-            case 'U':
-              
-                return true;
-            break;
-            default:
-
-                return false;
-            break;
-        }
-    }
-
-    $filename = "dicionario.txt";
-    $content = file_get_contents($filename);
-
-    
-
-    $pattern = '/<td title=\"Palavra\"><a href=".*">(.*)<\/a>/';
-    $pattern2 = '/<a href=".*">(.*)<\/a>/';
-
-
-    $resultado = preg_match_all($pattern, $content, $match);
-
-
-    $size = count($match[1]);
-    $novaPalavra = $match[1][20];
 
 
     
-    
-    for($i = 0; $i<$size; $i++){
-        $novaPalavra = $match[1][$i];
-        echo $novaPalavra."<br>";
-        $novaPalavra = preparaPalavraTestes($novaPalavra);
-        echo $novaPalavra."<br>";
-        $tipo = verificaTipo($novaPalavra);
-        echo $tipo."<br>";
-        $novaPalavra = preparaPalavraTestes2($novaPalavra);
-        $canonicidade = verificaCanonicidade($novaPalavra);
-        echo $canonicidade."<br>";
-        $novaPalavra = preparaPalavraBD($novaPalavra);
-        echo $novaPalavra."<br>";
-        $sql = "INSERT INTO palavra (caracteres, canonicidade, tipo) VALUES ('$novaPalavra', $canonicidade,$tipo)";
-        $conexao->query($sql);
-    }
-?>
+    </script>
 
+</body>
+</html>
