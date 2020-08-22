@@ -12,15 +12,14 @@
 
 
     <form name="instrucao"  method="GET">
-            Tipo da palavra:<br>
-            <input type="radio" name="tipo" value="O"> Oxítona<br>
-            <input type="radio" name="tipo" value="P"> Paroxítona<br>
-            <input type="radio" name="tipo" value="PP"> Proparoxítona<br>
-
             Canonicidade:<br>
-            <input type="radio" name="canonicidade" value="S"> Canônica<br>
-            <input type="radio" name="canonicidade" value="N"> Não canônica<br>
-            
+            <input type="radio" name="canonicidade" value=1> Canônica<br>
+            <input type="radio" name="canonicidade" value=0> Não canônica<br>
+        
+            Tipo da palavra:<br>
+            <input type="radio" name="tipo" value=1> Oxítona<br>
+            <input type="radio" name="tipo" value=2> Paroxítona<br>
+            <input type="radio" name="tipo" value=3> Proparoxítona<br>
         
             <input type="submit" value="Procurar palavras"></input>
     </form> 
@@ -28,34 +27,21 @@
     <div>
         <h2>Palavras</h2>
         <ul>
-        <?php
-            $sql = "SELECT * FROM palavra WHERE canonicidade LIKE 1 AND tipo LIKE 3";
-            $dados = $conexao->query($sql);
+            <?php
+                $canonicidade = $_GET['canonicidade'];
+                $tipo = $_GET['tipo'];
 
-            while($registro = mysqli_fetch_array($dados))
-            {
-                $palavra = $registro['caracteres'];
-                echo "<li>".$palavra."</li>";
-            }
-        ?>
+                $sql = "SELECT * FROM palavra WHERE canonicidade LIKE $canonicidade AND tipo LIKE $tipo";
+                $dados = $conexao->query($sql);
+
+                while($registro = mysqli_fetch_array($dados))
+                {
+                    $palavra = $registro['caracteres'];
+                    echo "<li>".$palavra."</li>";
+                }
+            ?>
         </ul>
     </div>
-
-    <!--<script>
-        var form = document.forms.instrucao;
-        var lista = document.getElementsByTagName("ul")[0];
-    
-        form.addEventListener("submit", insereElementoNovoLista);
-
-        function insereElementoNovoLista(e){
-            e.preventDefault();
-            console.log("teste");
-            let novoLi = document.createElement("li");
-            novoLi.textContent = "teste";
-            lista.appendChild(novoLi);
-        }
-
-    </script>-->
     
 </body>
 </html>
