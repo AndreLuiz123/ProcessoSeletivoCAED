@@ -37,7 +37,7 @@
                 while($registro = mysqli_fetch_array($dados))
                 {
                     $palavra = $registro['caracteres'];
-                    echo "<li>".$palavra."</li>";
+                    echo "<li> <button class='selecionar'>".$palavra."</button></li>";
                     
                     
                 }
