@@ -31,14 +31,14 @@
                 $canonicidade = $_POST['canonicidade'];
                 $tipo = $_POST['tipo'];
 
-                $sql = "SELECT * FROM palavra WHERE canonicidade LIKE $canonicidade AND tipo LIKE $tipo  ORDER BY RAND()";
+                $sql = "SELECT * FROM palavra WHERE canonicidade LIKE $canonicidade AND tipo LIKE $tipo  ORDER BY RAND() LIMIT 30";
                 $dados = $conexao->query($sql);
 
-                $i=0;
                 while($registro = mysqli_fetch_array($dados))
                 {
                     $palavra = $registro['caracteres'];
                     echo "<li>".$palavra."</li>";
+                    
                     
                 }
             ?>
