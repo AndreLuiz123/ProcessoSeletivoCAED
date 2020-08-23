@@ -11,7 +11,7 @@
     <h1>GERADOR DE PALAVRAS</h1>
 
 
-    <form name="instrucao"  method="GET">
+    <form name="instrucao"  method="POST">
             Canonicidade:<br>
             <input type="radio" name="canonicidade" value=1> Canônica<br>
             <input type="radio" name="canonicidade" value=0> Não canônica<br>
@@ -26,21 +26,23 @@
 
     <div>
         <h2>Palavras</h2>
-        <ul>
+        <ol>
             <?php
-                $canonicidade = $_GET['canonicidade'];
-                $tipo = $_GET['tipo'];
+                $canonicidade = $_POST['canonicidade'];
+                $tipo = $_POST['tipo'];
 
-                $sql = "SELECT * FROM palavra WHERE canonicidade LIKE $canonicidade AND tipo LIKE $tipo";
+                $sql = "SELECT * FROM palavra WHERE canonicidade LIKE $canonicidade AND tipo LIKE $tipo  ORDER BY RAND()";
                 $dados = $conexao->query($sql);
 
+                $i=0;
                 while($registro = mysqli_fetch_array($dados))
                 {
                     $palavra = $registro['caracteres'];
                     echo "<li>".$palavra."</li>";
+                    
                 }
             ?>
-        </ul>
+        </ol>
     </div>
     
 </body>
