@@ -50,8 +50,15 @@
         <ul>
 
         </ul>
-        <button onclick ="gerarPalavraNova(1,1)">Criar</button>
+        <button onclick ="gerarPalavrasNovas()">Criar</button>
+    </div>
 
+    <div>
+        <h2>Palavras novas</h2>
+        <ul id="palavrasNovas">
+
+        </ul>
+        <button>Exportar para Excel</button>
     </div>
 
 
@@ -104,6 +111,8 @@
             }})
         }
 
+        
+
         function coletaPalavra(){
             
             var ul = document.getElementById("palavra");
@@ -121,7 +130,26 @@
             }
         }
 
-        function gerarPalavraNova(canonicidade, tipo){
+        function gerarPalavrasNovas(){
+            for(let i=0; i<5 ; i++)
+            {
+                gerarPalavraNova();
+            }
+
+                var html = "";
+            for(var a = 0; a<palavrasNovas.length; a++)
+               {
+                    var palavra = palavrasNovas[a];
+
+                    html += "<li>"+palavra+"</li>";
+                    
+               }
+               document.getElementById("palavrasNovas").innerHTML = html;
+
+
+        }
+
+        function gerarPalavraNova(){
                 
             embaralha(palavrasSemente);
 
