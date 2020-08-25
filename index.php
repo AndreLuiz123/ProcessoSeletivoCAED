@@ -8,17 +8,19 @@
       integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
       crossorigin="anonymous">
     </script>
+    <script src="funcoesUteis.js"></script>
 
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="estilo.css">
     <title>Gerador de palavras</title>
 </head>
 <body>
-    <h1>GERADOR DE PALAVRAS</h1>
-
-
-    <form name="instrucao"  method="POST">
+    
+    
+    <form id="header" name="instrucao"  method="POST">
+        <h1>GERADOR DE PALAVRAS</h1>
             Canonicidade:<br>
             <input type="radio" name="canonicidade" id="canonico" value=1> Canônica<br>
             <input type="radio" name="canonicidade" id="naoCanonico" value=0> Não canônica<br>
@@ -30,37 +32,36 @@
         
     </form> 
     
-    <div>
-        <h2>Palavras encontradas</h2>
+
+    <div id="conteudo">
+    <div id="palavras-BD">
+        <h2>Palavras encontradas no BD</h2>
         <form name="instrucao"  method="POST">
             <ul id="palavra">
 
             </ul>
          </form>
     <button onclick="checarCaracteristicas()"> Procurar palavras no Banco de dados </button>
-        <h2>Palavras encontradas</h2>
+    </div>
+
+    <div id="palavras-selecionadas">
+    <h2>Palavras coletadas da lista de palavras</h2>
          <ul id="resultado">
 
          </ul>
     <button onclick="coletaPalavra()"> Armazenar palavras selecionadas </button>
     </div>
 
-    <div>
-        <h2>Criar novas palavras</h2>
-        <ul>
-
-        </ul>
-        <button onclick ="gerarPalavrasNovas()">Criar</button>
-    </div>
-
-    <div>
+    
+    <div id="palavras-geradas">
         <h2>Palavras novas</h2>
         <ul id="palavrasNovas">
-
-        </ul>
+            
+            </ul>
+        <button onclick ="gerarPalavrasNovas()">Criar</button>
         <button>Exportar para Excel</button>
     </div>
-
+    </div>
 
     <script>
     
@@ -171,9 +172,41 @@
             console.log(palavrasNovas);
         }
 
+        
+        function coletarSilabaAleatoria(string){
+            
+            var silabaAleatoria =  Math.floor(Math.random()*string.length-1);
+            if(silabaAleatoria<0)
+            silabaAleatoria = 0;
+            else if(silabaAleatoria>string.length-1)
+            silabaAleatoria = string.length-1; 
+            
+            console.log("string: "+string);
+            
+            while(string[silabaAleatoria]!=".")
+            {
+                console.log(string[silabaAleatoria]+", "+silabaAleatoria);
+                silabaAleatoria--;
+                if(silabaAleatoria<0)
+                silabaAleatoria = 0;
+            }
+            
+            var silabaRetorno = "";
+            silabaAleatoria++;
+            while(string[silabaAleatoria]!="." && string[silabaAleatoria]!="")
+            {
+                silabaRetorno+=string[silabaAleatoria];
+                silabaAleatoria++;
+                if(silabaAleatoria>string.length-1)
+                silabaAleatoria = string.length-1;
+            }
+            
+            return silabaRetorno; 
+        }
+
         function embaralha(lista) {
             //console.log(lista);
-
+        
             for (let indice = lista.length; indice; indice--) {
             
                 const indiceAleatorio = Math.floor(Math.random() * indice);
@@ -182,97 +215,11 @@
                 [lista[indice - 1], lista[indiceAleatorio]] = 
                     [lista[indiceAleatorio], lista[indice - 1]];
             }
-
+        
             //console.log(lista);
         }
-
-        function coletarSilabaAleatoria(string){
-            
-            var silabaAleatoria =  Math.floor(Math.random()*string.length-1);
-            if(silabaAleatoria<0)
-                    silabaAleatoria = 0;
-            else if(silabaAleatoria>string.length-1)
-                    silabaAleatoria = string.length-1; 
-
-            console.log("string: "+string);
-            
-            while(string[silabaAleatoria]!=".")
-            {
-                console.log(string[silabaAleatoria]+", "+silabaAleatoria);
-                silabaAleatoria--;
-                if(silabaAleatoria<0)
-                    silabaAleatoria = 0;
-            }
-
-            var silabaRetorno = "";
-            silabaAleatoria++;
-            while(string[silabaAleatoria]!="." && string[silabaAleatoria]!="")
-            {
-                silabaRetorno+=string[silabaAleatoria];
-                silabaAleatoria++;
-                if(silabaAleatoria>string.length-1)
-                    silabaAleatoria = string.length-1;
-            }
-
-            return silabaRetorno; 
-        }
-
-
-        function verificaVogal(letra){
-
-            switch(letra){
-                case 'a':
-                    return true;
-                break;
-                case 'e':
-                    return true;
-                break;
-                case 'i':
-                    return true;
-                break;
-                case 'o':
-                    return true;
-                break;
-                case 'u':
-                    return true;
-                break;
-                case 'á':
-                    return true;
-                break;
-                case 'é':
-                    return true;
-                break;
-                case 'í':
-                    return true;
-                break;
-                case 'ó':
-                    return true;
-                break;
-                case 'ú':
-                    return true;
-                break;
-                case 'â':
-                    return true;
-                break;
-                case 'ê':
-                    return true;
-                break;
-                case 'ô':
-                    return true;
-                break;
-                case 'ã':
-                    return true;
-                break;
-                case 'õ':
-                    return true;
-                break;
-                default:
-                    return false;
-                break;
-            }
-        }
-
-    </script>
+        
+        </script>
 
 </body>
 </html>
