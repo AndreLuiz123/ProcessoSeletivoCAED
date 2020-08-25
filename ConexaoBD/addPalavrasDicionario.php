@@ -1,12 +1,23 @@
 <?php
     include("conexao.php");
 
+    function palavraBD($string){
+        $vowels = array("<b>·</b>","·");
+        $palavra = str_replace($vowels, ".", $string);
+        $vowels = array("<b>","</b>");
+        $palavra = str_replace($vowels, ",", $palavra);
+        $vowels = array("<u>","</u>");
+        $palavra = str_replace($vowels, "", $palavra);
+
+        return $palavra;
+    }
+
     function preparaPalavraTestes($string){
         $vowels = array("<b>·</b>","·");
         $palavra = str_replace($vowels, ".", $string);
         $vowels = array("<b>","</b>");
         $palavra = str_replace($vowels, ",", $palavra);
-        $vowels = array("<u>","</u>","<span>","</span>");
+        $vowels = array("<u>","</u>");
         $palavra = str_replace($vowels, "", $palavra);
         $vowels = array("á","â","ã","à");
         $palavra = str_replace($vowels, "a", $palavra);
@@ -128,7 +139,7 @@
             break;
         }
     }
-
+ 
     $filename = "dicionario.txt";
     $content = file_get_contents($filename);
 
@@ -149,6 +160,7 @@
     
     for($i = 0; $i<$size; $i++){
         $novaPalavra = $match[1][$i];
+        $palavraBD = palavraBD($match[1][$i]);
         echo $novaPalavra."<br>";
         $novaPalavra = preparaPalavraTestes($novaPalavra);
         echo $novaPalavra."<br>";
@@ -159,7 +171,7 @@
         echo $canonicidade."<br>";
         $novaPalavra = preparaPalavraBD($novaPalavra);
         echo $novaPalavra."<br>";
-        $sql = "INSERT INTO palavra (caracteres, canonicidade, tipo) VALUES ('$novaPalavra', $canonicidade,$tipo)";
+        $sql = "INSERT INTO palavra (caracteres, canonicidade, tipo) VALUES ('$palavraBD', $canonicidade,$tipo)";
         $conexao->query($sql);
     }
 

@@ -36,17 +36,24 @@
             <ul id="palavra">
 
             </ul>
-            <input type="submit" value="Procurar palavras"></input>
          </form>
-
+    <button onclick="checarCaracteristicas()"> Procurar palavras no Banco de dados </button>
+        <h2>Palavras encontradas</h2>
          <ul id="resultado">
 
          </ul>
+    <button onclick="coletaPalavra()"> Armazenar palavras selecionadas </button>
     </div>
 
+    <div>
+        <h2>Criar novas palavras</h2>
+        <ul>
 
-    <button onclick="checarCaracteristicas()"> TESTE </button>
-    <button onclick="coletaPalavra()"> TESTE2 </button>
+        </ul>
+        <button>Criar</button>
+
+    </div>
+
 
     <script>
     
@@ -56,6 +63,8 @@
         var tipo1 = document.getElementById("oxitona");
         var tipo2 = document.getElementById("paroxitona");
         var tipo3 = document.getElementById("proparoxitona");
+
+        var palavrasSemente = [];
 
         function checarCaracteristicas(){
             var canonicidade = canonicidade1.value;
@@ -76,7 +85,7 @@
         }
 
         function encontraPalavraBD(canonicidade, tipo){
-            $.ajax({url:"echo.php",data: 'canonicidade='+canonicidade+ '&tipo=' + tipo, success:function(result){
+            $.ajax({url:"procuraPalavrasBD.php",data: 'canonicidade='+canonicidade+ '&tipo=' + tipo, success:function(result){
                 
                 var data =JSON.parse(result);
                
@@ -106,8 +115,16 @@
                 var novoLi = document.createElement("li");
                 novoLi.textContent = items[i].value;
                 listaNova.appendChild(novoLi);
+                palavrasSemente.push(novoLi.textContent);
               }
             }
+        }
+
+        function gerarPalavraNova(canonicidade, tipo){
+                
+
+
+
         }
 
 
