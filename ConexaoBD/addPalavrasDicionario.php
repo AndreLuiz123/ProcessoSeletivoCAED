@@ -72,19 +72,30 @@
             $silabaTonica = 1;
             $palavraAnalisada = strrev($string);
 
+            echo $string."<br>"; 
+            echo $palavraAnalisada."<br>"; 
+
+            $palavraAnalisada = $palavraAnalisada.'.'; 
 
             while($silabaTonica<4)
             {
                 $silaba = strstr($palavraAnalisada, '.', true); 
+
+                
+            echo $silaba."<br>"; 
                 
                 if($silaba[0]===',')
                 {
+                    echo $silabaTonica." Dentro do if <br>";
                     return $silabaTonica;
                 }
                 $silabaTonica++;
                 $palavraAnalisada = strstr($palavraAnalisada,'.');
                 $palavraAnalisada = substr($palavraAnalisada, 1);
+                echo $palavraAnalisada."<br>"; 
             }
+            echo $silabaTonica." fora do if <br>";
+            
 
             return 1;
     }
@@ -155,22 +166,14 @@
     $size = count($match[1]);
     $novaPalavra = $match[1][20];
 
-
-    
-    
     for($i = 0; $i<$size; $i++){
         $novaPalavra = $match[1][$i];
         $palavraBD = palavraBD($match[1][$i]);
-        echo $novaPalavra."<br>";
         $novaPalavra = preparaPalavraTestes($novaPalavra);
-        echo $novaPalavra."<br>";
         $tipo = verificaTipo($novaPalavra);
-        echo $tipo."<br>";
         $novaPalavra = preparaPalavraTestes2($novaPalavra);
         $canonicidade = verificaCanonicidade($novaPalavra);
-        echo $canonicidade."<br>";
         $novaPalavra = preparaPalavraBD($novaPalavra);
-        echo $novaPalavra."<br>";
         $sql = "INSERT INTO palavra (caracteres, canonicidade, tipo) VALUES ('$palavraBD', $canonicidade,$tipo)";
         $conexao->query($sql);
     }
