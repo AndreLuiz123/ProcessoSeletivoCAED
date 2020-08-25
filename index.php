@@ -50,7 +50,7 @@
         <ul>
 
         </ul>
-        <button>Criar</button>
+        <button onclick ="gerarPalavraNova(1,1)">Criar</button>
 
     </div>
 
@@ -65,6 +65,7 @@
         var tipo3 = document.getElementById("proparoxitona");
 
         var palavrasSemente = [];
+        var palavrasNovas = [];
 
         function checarCaracteristicas(){
             var canonicidade = canonicidade1.value;
@@ -122,11 +123,126 @@
 
         function gerarPalavraNova(canonicidade, tipo){
                 
+            embaralha(palavrasSemente);
 
+            var numeroMaxSilabas = Math.floor(Math.random()*(4) + 1);
 
+            var novaPalavra = "";
 
+            for(let i=0; i<numeroMaxSilabas; i++)
+            {
+                var palavraAleatoria =  Math.floor(Math.random()*(palavrasSemente.length-1));
+                if(palavraAleatoria<0)
+                    palavraAleatoria = 0;
+                console.log(palavraAleatoria);
+                //console.log(palavrasSemente[palavraAleatoria]);
+                novaPalavra += coletarSilabaAleatoria('.'+palavrasSemente[palavraAleatoria]+'.');
+            }
+
+            palavrasNovas.push(novaPalavra);
+            console.log(palavrasNovas);
         }
 
+        function embaralha(lista) {
+            //console.log(lista);
+
+            for (let indice = lista.length; indice; indice--) {
+            
+                const indiceAleatorio = Math.floor(Math.random() * indice);
+            
+                // atribuição via destructuring
+                [lista[indice - 1], lista[indiceAleatorio]] = 
+                    [lista[indiceAleatorio], lista[indice - 1]];
+            }
+
+            //console.log(lista);
+        }
+
+        function coletarSilabaAleatoria(string){
+            
+            var silabaAleatoria =  Math.floor(Math.random()*string.length-1);
+            if(silabaAleatoria<0)
+                    silabaAleatoria = 0;
+            else if(silabaAleatoria>string.length-1)
+                    silabaAleatoria = string.length-1; 
+
+            console.log("string: "+string);
+            
+            while(string[silabaAleatoria]!=".")
+            {
+                console.log(string[silabaAleatoria]+", "+silabaAleatoria);
+                silabaAleatoria--;
+                if(silabaAleatoria<0)
+                    silabaAleatoria = 0;
+            }
+
+            var silabaRetorno = "";
+            silabaAleatoria++;
+            while(string[silabaAleatoria]!="." && string[silabaAleatoria]!="")
+            {
+                silabaRetorno+=string[silabaAleatoria];
+                silabaAleatoria++;
+                if(silabaAleatoria>string.length-1)
+                    silabaAleatoria = string.length-1;
+            }
+
+            return silabaRetorno; 
+        }
+
+
+        function verificaVogal(letra){
+
+            switch(letra){
+                case 'a':
+                    return true;
+                break;
+                case 'e':
+                    return true;
+                break;
+                case 'i':
+                    return true;
+                break;
+                case 'o':
+                    return true;
+                break;
+                case 'u':
+                    return true;
+                break;
+                case 'á':
+                    return true;
+                break;
+                case 'é':
+                    return true;
+                break;
+                case 'í':
+                    return true;
+                break;
+                case 'ó':
+                    return true;
+                break;
+                case 'ú':
+                    return true;
+                break;
+                case 'â':
+                    return true;
+                break;
+                case 'ê':
+                    return true;
+                break;
+                case 'ô':
+                    return true;
+                break;
+                case 'ã':
+                    return true;
+                break;
+                case 'õ':
+                    return true;
+                break;
+                default:
+                    return false;
+                break;
+            }
+        }
 
     </script>
 
